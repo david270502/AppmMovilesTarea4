@@ -6,7 +6,7 @@
         android:icon="@drawable/baseline_house_24"
         app:showAsAction="always"/>
     <item android:id="@+id/opcion2"
-        android:title="Guardar"
+        android:title="Añadir"
         android:icon="@drawable/baseline_create_24"
         app:showAsAction="always"/>
     <item android:id="@+id/opcion3"

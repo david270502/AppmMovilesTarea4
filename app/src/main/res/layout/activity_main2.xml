@@ -9,4 +9,29 @@
         android:id="@+id/my_toolbar"
         layout="@layout/my_toolbar"/>
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Optimiza tu rendimiento académico con nuestra aplicación móvil, diseñada para estudiantes. Organiza tu tiempo de estudio con horarios personalizados, recibe recordatorios de sesiones y realiza un seguimiento detallado del tiempo invertido en cada materia. ¡Potencia tu éxito educativo de manera inteligente y eficiente!"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.74" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.372"
+        app:srcCompat="@drawable/app" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@ public class MainActivity2 extends AppCompatActivity {
             case "Inicio":  Intent inicio = new Intent(MainActivity2.this, MainActivity2.class);
                 startActivity(inicio);
                 return true;
-            case "Guardar" : Intent guardar = new Intent(MainActivity2.this, CrearHorario.class);
+            case "Añadir" : Intent guardar = new Intent(MainActivity2.this, CrearHorario.class);
                 startActivity(guardar);
                 return true;
             case "Salir" : Intent salir = new Intent(MainActivity2.this,RegistroTarea.class);

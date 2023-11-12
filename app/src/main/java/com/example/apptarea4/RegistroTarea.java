@@ -1,32 +1,40 @@
 package com.example.apptarea4;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.Calendar;
 
 public class RegistroTarea extends AppCompatActivity {
+
     private EditText editTextDate;
+    private EditText editTextNombreTarea;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_tarea);
+
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         myToolbar.setTitle("");
         setSupportActionBar(myToolbar);
-        editTextDate = findViewById(R.id.editTextDate);
 
+        editTextDate = findViewById(R.id.etFecha);
+        editTextNombreTarea = findViewById(R.id.etTarea);
 
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,36 +42,39 @@ public class RegistroTarea extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
+
+        Button btnGuardar = findViewById(R.id.btnguardar);
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                guardarTarea();
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.my_menu, menu);
+        getMenuInflater().inflate(R.menu.my_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch ((String) item.getTitle()) {
+        switch (item.getTitle().toString()) {
             case "Inicio":
-                Intent inicio = new Intent(RegistroTarea.this, MainActivity2.class);
-                startActivity(inicio);
+                startActivity(new Intent(RegistroTarea.this, MainActivity2.class));
                 return true;
-            case "Guardar":
-                Intent guardar = new Intent(RegistroTarea.this, CrearHorario.class);
-                startActivity(guardar);
+            case "Añadir":
+                startActivity(new Intent(RegistroTarea.this, CrearHorario.class));
                 return true;
             case "Salir":
-                Intent salir = new Intent(RegistroTarea.this, RegistroTarea.class);
-                startActivity(salir);
+                startActivity(new Intent(RegistroTarea.this, RegistroTarea.class));
                 return true;
             case "Cerrar Sesion":
-                Intent cerrar = new Intent(RegistroTarea.this, MainActivity.class);
-                startActivity(cerrar);
+                startActivity(new Intent(RegistroTarea.this, MainActivity.class));
                 return true;
             default:
-                return true;
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -75,12 +86,27 @@ public class RegistroTarea extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(android.widget.DatePicker view, int year, int month, int day) {
-                String selectedDate = day + "/" + (month + 1) + "/" + year; // Formato de fecha deseado
+            public void onDateSet(DatePicker view, int year1, int month1, int day1) {
+                String selectedDate = day1 + "/" + (month1 + 1) + "/" + year1;
                 editTextDate.setText(selectedDate);
             }
         }, year, month, day);
 
         datePickerDialog.show();
+    }
+
+    private void guardarTarea() {
+        String nombreTarea = editTextNombreTarea.getText().toString();
+        String fechaTarea = editTextDate.getText().toString();
+
+        if (!nombreTarea.isEmpty() && !fechaTarea.isEmpty()) {
+            mostrarMensaje("Tarea guardada: " + nombreTarea + " - Fecha: " + fechaTarea);
+        } else {
+            mostrarMensaje("Completa todos los campos");
+        }
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_SHORT).show();
     }
 }
