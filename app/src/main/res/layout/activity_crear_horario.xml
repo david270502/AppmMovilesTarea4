@@ -62,4 +62,16 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTime"
         app:layout_constraintVertical_bias="0.206" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CREAR HORARIO"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,12 @@
 package com.example.apptarea4;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -69,28 +66,6 @@ public class CrearHorario extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch ((String) item.getTitle()) {
-            case "Inicio":
-                Intent inicio = new Intent(CrearHorario.this, MainActivity2.class);
-                startActivity(inicio);
-                return true;
-            case "Añadir":
-                startActivity(new Intent(CrearHorario.this, CrearHorario.class));
-                return true;
-            case "Salir":
-                Intent salir = new Intent(CrearHorario.this, RegistroTarea.class);
-                startActivity(salir);
-                return true;
-            case "Cerrar Sesion":
-                Intent cerrar = new Intent(CrearHorario.this, MainActivity.class);
-                startActivity(cerrar);
-                return true;
-            default:
-                return true;
-        }
-    }
 
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
@@ -132,10 +107,21 @@ public class CrearHorario extends AppCompatActivity {
 
         if (!nombreMateria.isEmpty() && !fechaTarea.isEmpty()) {
             mostrarMensaje("Tarea guardada: " + nombreMateria + " - Fecha: " + fechaTarea + " - Hora:" + horaTarea);
+
+            // Crear un intent para iniciar la actividad ListaHorariosActivity
+            Intent intent = new Intent(this, ListaHorarios.class);
+
+            // Pasar los datos de la tarea guardada al intent
+            intent.putExtra("nombreMateria", nombreMateria);
+            intent.putExtra("horaTarea", horaTarea);
+            intent.putExtra("fechaTarea", fechaTarea);
+
+            startActivity(intent);
         } else {
             mostrarMensaje("Completa todos los campos");
         }
     }
+
 
     private void mostrarMensaje(String mensaje) {
         Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_SHORT).show();
