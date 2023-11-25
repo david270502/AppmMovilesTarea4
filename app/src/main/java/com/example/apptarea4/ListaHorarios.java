@@ -1,11 +1,16 @@
 package com.example.apptarea4;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.apptarea4.adapter.HorarioAdapter;
 import com.example.apptarea4.modelos.Horario;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,22 +32,23 @@ public class ListaHorarios extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        // Verificar si hay datos extras en el intent
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            // Obtener los datos de la tarea guardada
-            String nombreMateria = extras.getString("nombreMateria");
-            String fechaTarea = extras.getString("fechaTarea");
-            String horaTarea = extras.getString("horaTarea");
+        // Obtener los datos del horario guardado desde el intent
+        Intent intent = getIntent();
+        if (intent != null) {
+            String nombreMateria = intent.getStringExtra("nombreMateria");
+            String fechaTarea = intent.getStringExtra("fechaTarea");
+            String horaTarea = intent.getStringExtra("horaTarea");
 
-            // Crear un nuevo objeto Horario con los datos
-            Horario nuevoHorario = new Horario(nombreMateria, fechaTarea, horaTarea);
+            if (nombreMateria != null && fechaTarea != null && horaTarea != null) {
+                // Crear un nuevo objeto Horario con los datos
+                Horario nuevoHorario = new Horario(nombreMateria, fechaTarea, horaTarea);
 
-            // Agregar el nuevo horario a la lista
-            horarios.add(nuevoHorario);
+                // Agregar el nuevo horario a la lista
+                horarios.add(nuevoHorario);
 
-            // Notificar al adaptador sobre el cambio en los datos
-            adapter.notifyDataSetChanged();
+                // Notificar al adaptador sobre el cambio en los datos
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 }

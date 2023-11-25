@@ -29,6 +29,7 @@ public class HorarioAdapter extends RecyclerView.Adapter<HorarioAdapter.HorarioV
     @Override
     public void onBindViewHolder(@NonNull HorarioViewHolder holder, int position) {
         Horario horario = horarios.get(position);
+        // Aquí se establecen los datos en los elementos de la vista
         holder.textViewMateria.setText(horario.getNombreMateria());
         holder.textViewFecha.setText(horario.getFechaTarea());
         holder.textViewHora.setText(horario.getHoraTarea());
@@ -46,12 +47,14 @@ public class HorarioAdapter extends RecyclerView.Adapter<HorarioAdapter.HorarioV
 
         public HorarioViewHolder(@NonNull View itemView) {
             super(itemView);
+            // Aquí se encuentran los elementos de la vista
             textViewMateria = itemView.findViewById(R.id.textViewMateria);
             textViewFecha = itemView.findViewById(R.id.textViewFecha);
             textViewHora = itemView.findViewById(R.id.textViewHora);
         }
     }
 
+    // Este método actualiza la lista y notifica al adaptador sobre el cambio
     public void actualizarLista(List<Horario> nuevaLista) {
         horarios.clear();
         horarios.addAll(nuevaLista);

@@ -1,10 +1,8 @@
 package com.example.apptarea4;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,13 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.apptarea4.modelos.Tarea;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class RegistroTarea extends AppCompatActivity {
 
     private EditText editTextDate;
     private EditText editTextNombreTarea;
 
+    // Lista de tareas
+    private List<Tarea> tareas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,9 @@ public class RegistroTarea extends AppCompatActivity {
 
         editTextDate = findViewById(R.id.etFecha);
         editTextNombreTarea = findViewById(R.id.etTarea);
+
+        // Inicializar la lista de tareas
+        tareas = new ArrayList<>();
 
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,26 +63,6 @@ public class RegistroTarea extends AppCompatActivity {
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.my_menu, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getTitle().toString()) {
-            case "Inicio":
-                startActivity(new Intent(RegistroTarea.this, MainActivity2.class));
-                return true;
-            case "Añadir":
-                startActivity(new Intent(RegistroTarea.this, CrearHorario.class));
-                return true;
-            case "Salir":
-                startActivity(new Intent(RegistroTarea.this, RegistroTarea.class));
-                return true;
-            case "Cerrar Sesion":
-                startActivity(new Intent(RegistroTarea.this, MainActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void showDatePickerDialog() {
@@ -100,8 +87,22 @@ public class RegistroTarea extends AppCompatActivity {
         String fechaTarea = editTextDate.getText().toString();
 
         if (!nombreTarea.isEmpty() && !fechaTarea.isEmpty()) {
+            // Crear una nueva tarea
+            MyApp myApp = (MyApp) getApplication();
+            myApp.getTareas().add(new Tarea(nombreTarea, fechaTarea));
+
+            Intent intent = new Intent(this, ListaTareas.class);
+            intent.putExtra("nombreTarea", nombreTarea);
+            intent.putExtra("fechaTarea", fechaTarea);
+            startActivity(intent);
+
+            // Notificar al adaptador sobre el cambio en los datos (si estás utilizando un RecyclerView)
+            // adapter.notifyDataSetChanged();
+
+            // Mostrar mensaje de éxito
             mostrarMensaje("Tarea guardada: " + nombreTarea + " - Fecha: " + fechaTarea);
         } else {
+            // Mostrar mensaje de error si no se completan todos los campos
             mostrarMensaje("Completa todos los campos");
         }
     }
